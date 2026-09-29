@@ -57,3 +57,17 @@ helpers are present from ledge but remain semantically deferred.
 | `establish` | function | Q4 fixture | module | Validates exact HELLO versions and returns sequence-1 ACCEPT. |
 | `run_idle_wake` | function | idle discriminator | module | Holds application traffic silent for 60 seconds, injects wake, and records PS2 empty-poll count. |
 | `finish` / `main` | function family | checkpoint coordination | module | Complete final handshake and emit timestamped PASS/FAIL evidence. |
+
+## Checkpoint 03A peer
+
+`rfb_channel_probe.py` is test apparatus. It uses the real
+`wire_protocol.py` and sends synthetic opaque channel-1 DATA only.
+
+| Name | Kind | Owner | Scope | Description |
+|---|---|---|---|---|
+| `PRE_IDLE_FRAMES` | constant tuple | queue workload | module | Defines offsets/lengths that force ring wrap and special queue cases. |
+| `POST_IDLE_OFFSET` / `POST_IDLE_LENGTH` | constant | idle wake payload | module | Define the synthetic RFB DATA committed after 60 seconds idle. |
+| `stream_bytes` | function | synthetic stream | module | Generates the same deterministic opaque bytes independently of the PS2. |
+| `send_rfb_data` | function | producer fixture | module | Encodes/sends one channel-1 DATA frame with direction-local sequence. |
+| `require_control` | function | checkpoint control | module | Validates PS2 control-channel milestones. |
+| `main` | function | checkpoint coordinator | entry point | Performs Q4, sends queue workload, holds idle, sends wake DATA, validates final generation/availability, and closes handshake. |

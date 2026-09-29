@@ -23,3 +23,5 @@ rung-02 physical Wire discriminator.
 | `BUILD_DIR` / `ELF` | shell variable family | build-wire-physical.sh | checkpoint 02 artifacts | script | Name the wire-physical output directory and ELF. |
 | `CC` / `CFLAGS` / `INCS` | shell variable family | build-wire-physical.sh | container compile | inner shell | Define compiler, flags, and platform/transport include roots. |
 | `B` / `G` | shell variable family | build-wire-physical.sh | container build | inner shell | Short names for output and generated-IRX directories. |
+| `BUILD_DIR` / `ELF` | shell variable family | build-rfb-channel.sh | checkpoint 03A artifacts | script | Name the logical-RFB-channel output directory and ELF. |
+| `CC` / `CFLAGS` / `INCS` | shell variable family | build-rfb-channel.sh | container compile | inner shell | Define pinned EE compilation for platform + physical Wire + RFB channel. |
