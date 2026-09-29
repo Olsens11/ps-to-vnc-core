@@ -312,3 +312,9 @@ Host qualification:
   from another pthread and could hang; the fixture was corrected to observe
   waiter entry through a pthread condition inside the semaphore model. No product
   source change resulted from that fixture bug.
+
+03B hardware-apparatus preflight note:
+The first target build of `tests/hardware/rfb_activity/main.c` redundantly
+redeclared PS2SDK's `_gp` symbol with the wrong type. The target header already
+owns that declaration, so the redundant test-only declaration was removed. The
+full host suite and target build then passed. No product-source behavior changed.

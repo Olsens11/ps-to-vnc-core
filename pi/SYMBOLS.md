@@ -71,3 +71,16 @@ helpers are present from ledge but remain semantically deferred.
 | `send_rfb_data` | function | producer fixture | module | Encodes/sends one channel-1 DATA frame with direction-local sequence. |
 | `require_control` | function | checkpoint control | module | Validates PS2 control-channel milestones. |
 | `main` | function | checkpoint coordinator | entry point | Performs Q4, sends queue workload, holds idle, sends wake DATA, validates final generation/availability, and closes handshake. |
+
+## Checkpoint 03B peer
+
+`rfb_activity_probe.py` externally paces each real activity wake.
+
+| Name | Kind | Owner | Scope | Description |
+|---|---|---|---|---|
+| `RFB_PAYLOAD_BYTES` / `TOTAL_FRAMES` | constant family | synthetic workload | module | Define 328-byte frames and 258 total activity publications. |
+| `CONTROL_*` | constant family | checkpoint coordination | module | READY, IDLE_READY, IDLE_RESULT, PASS, and DONE control identities. |
+| `payload_for` | function | synthetic RFB bytes | module | Independently generates each expected frame payload. |
+| `send_rfb` | function | producer fixture | module | Sends one fragmented channel-1 DATA frame. |
+| `recv_control` / `send_control` | function family | pacing protocol | module | Sequence-check and exchange exact checkpoint control records. |
+| `main` | function | checkpoint coordinator | entry point | Sends pre-published frame, paces 128 blocked wakes, holds 60-second idle, then paces 128 more wakes and verifies final activity count. |
