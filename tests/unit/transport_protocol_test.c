@@ -1,3 +1,9 @@
+/*
+ * Direct host fixture for the imported PSTV protocol codec.
+ * Verifies exact wire bytes, bounds, typed establishment payloads, and the
+ * channel-specific codec identities present in the ledge source.
+ */
+
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>

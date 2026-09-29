@@ -89,3 +89,61 @@ Perform comment/naming/symbol cleanup before final hardware qualification for
 future rungs whenever practical. After a clean rung proves a defect and fix,
 document the behavioral invariant and backport it deliberately to ledge; the
 ledge backport receives its own integration validation and commit authority.
+
+## 2026-09-28 — Rung 02 physical Wire import and prequalification review
+
+Purpose: admit only the physical PSTV Wire layer from ledge before any logical
+channel/runtime code enters the clean integration line.
+
+Starting clean authority:
+`fbdada3155e1a619454bbf25dfee096510212698`
+
+Exact import commit:
+`ec81c0848ac787c022cb72a9b277d189ffdf8e1e`
+
+Ledge source authority:
+`048d3dfb082b74760c3fc54bf37559fc68c4f038`
+
+Imported product files:
+- `src/transport/protocol.c`
+- `src/transport/protocol.h`
+- `src/transport/physical_stream.c`
+- `src/transport/physical_stream.h`
+- `pi/wire_protocol.py`
+
+Original ledge SHA-256 identities:
+- `protocol.c` — `ed492b26a41ddacf03d5f96869f5c0f877bd4b4f214925cb2ea066a5114d2995`
+- `protocol.h` — `99a0407c154d9c167474a7dd164a7785a7108dfeecb4ba0ebdda5ce2044a5dbf`
+- `physical_stream.c` — `39f4c550e952ca26690066ef52583520c3c7c95f79d759aab9f00a91999de57c`
+- `physical_stream.h` — `98af3274fbb4c556a50cd74828a6e708a65cb26c1bb8ee853ed064df02b8f596`
+- `pi/wire_protocol.py` — `bcc6584dade91bd9d98d50d91ed09c2c080ad4c5980ebe7f2aba2ded23f0f0c8`
+
+Imported direct ledge fixtures and stubs are frozen in
+`provenance/RUNG02_TEST_IMPORTS.sha256`.
+
+Prequalification review findings:
+- product ownership boundaries and names are clear enough to retain;
+- the `physical_stream.h` receive-frame comment was visually attached to the
+  readability declaration because two comment blocks were stacked before it;
+- this was corrected as comment-only maintenance before hardware qualification;
+- maintained `physical_stream.h` SHA-256 is
+  `90e02e289caa4d492e8668975e3e4784f5e5b0a170cbe0e033dd63e88dfb1ac8`;
+- ledge's direct physical-stream fixture had no coverage for
+  `pstvnc_transport_physical_stream_wait_readable()`;
+- a clean host socketpair fixture was added specifically for timeout/readable/
+  invalid-stream readiness results;
+- the imported protocol fixture lacked a file synopsis; one was added without
+  changing test behavior.
+
+Qualification-scope warning:
+The imported protocol modules also contain RFB provider-failure and MPEG
+generation-control codecs, and the Pi codec contains RFB/audio/MPEG helpers.
+Those symbols are present because they share the ledge framing module; rung 02
+does not claim their rider semantics as hardware-qualified. Rung 02 covers only
+fixed framing, Q4 establishment, physical sequence/ownership, generic framed
+I/O, receive readiness, and long-idle framed wake.
+
+Provenance convention established:
+`provenance/LEDGE_IMPORTS.sha256` is immutable original-import evidence.
+`provenance/CURRENT_SOURCE.sha256` is the build-time current-source guard and
+may change only through an intentional logged maintenance/fix commit.

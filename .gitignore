@@ -3,3 +3,4 @@ build/
 *.ELF
 __pycache__/
 *.pyc
+tests/.build/

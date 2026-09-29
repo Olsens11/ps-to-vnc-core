@@ -10,7 +10,7 @@ BUILD_DIR="$ROOT/build/hardware/platform-network"
 ELF="$BUILD_DIR/PS-to-VNC-platform-network.ELF"
 
 cd "$ROOT"
-sha256sum -c provenance/LEDGE_IMPORTS.sha256
+sha256sum -c provenance/CURRENT_SOURCE.sha256
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR/generated"
 

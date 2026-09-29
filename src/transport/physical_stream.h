@@ -66,11 +66,6 @@ int pstvnc_transport_physical_stream_send_frame(
     size_t payload_length);
 
 /*
- * Receives exactly one complete PSTV frame from the sole physical socket.
- * The caller supplies storage large enough for the accepted payload ceiling.
- * Inbound sequence advances only after the complete payload has been read.
- */
-/*
  * Wait for inbound socket readability without consuming Wire bytes.
  * Returns 1 when readable, 0 on timeout, and -1 on readiness failure.
  */
@@ -78,6 +73,11 @@ int pstvnc_transport_physical_stream_wait_readable(
     pstvnc_transport_physical_stream_t *stream,
     uint32_t timeout_us);
 
+/*
+ * Receives exactly one complete PSTV frame from the sole physical socket.
+ * The caller supplies storage large enough for the accepted payload ceiling.
+ * Inbound sequence advances only after the complete payload has been read.
+ */
 int pstvnc_transport_physical_stream_receive_frame(
     pstvnc_transport_physical_stream_t *stream,
     pstvnc_transport_header_t *header,
