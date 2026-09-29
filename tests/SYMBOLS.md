@@ -15,5 +15,6 @@ modules. Hardware checkpoint code remains under `tests/hardware`.
 | `PHYSICAL_TEST` | Make variable | Makefile | physical-stream test | build | Imported ledge physical-stream fixture executable. |
 | `READINESS_TEST` | Make variable | Makefile | readiness test | build | Direct host `select()` readiness fixture executable. |
 | `RFB_CHANNEL_TEST` | Make variable | Makefile | logical RFB storage test | build | Imported direct fixture for circular storage, reads, activity, and residual discard. |
+| `RFB_FLOW_TEST` | Make variable | Makefile | synchronized RFB activity test | build | Host concurrency fixture for blocked-waiter and pre-published-activity wake cases. |
 | `unit` | Make target | Makefile | host test suite | build | Builds/runs C fixtures and the Pi Wire codec test. |
 | `clean` | Make target | Makefile | build hygiene | build | Removes disposable host test binaries. |

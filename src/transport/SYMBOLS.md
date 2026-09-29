@@ -48,3 +48,19 @@ runtime threads are deliberately absent.
 | `pstvnc_transport_rfb_channel_discard_residual` | function | rfb_channel.[ch] | terminal discard | public/internal | Discards exactly the expected residual without treating it as parser consumption/activity. | qualified target |
 | `pstvnc_transport_rfb_channel_available` | function | rfb_channel.[ch] | queue observation | public/internal | Reports committed unread bytes. | qualified target |
 | `pstvnc_transport_rfb_channel_activity_generation` | function | rfb_channel.[ch] | producer activity | public/internal | Reports generation incremented by each non-empty successful commit. | qualified target |
+
+## Rung 03B synchronized RFB activity flow
+
+`rfb_flow.[ch]` is a clean structural extraction from ledge `runtime.c`.
+See `provenance/RUNG03B_ACTIVITY_EXTRACTION.md`.
+
+| Name | Kind | Owner | Scope | Description | Rung 03B status |
+|---|---|---|---|---|---|
+| `pstvnc_transport_rfb_flow_t` | structure | synchronized RFB flow | public/internal | Embeds the logical queue plus queue/activity semaphores, activity sequence, single waiter state, and local failure latch. | qualified target |
+| `pstvnc_transport_rfb_flow_initialize` | function | synchronized RFB flow | public/internal | Binds caller storage and creates queue-lock/activity semaphores using ledge runtime construction rules. | qualified target |
+| `pstvnc_transport_rfb_flow_commit_data` | function | producer path | public/internal | Commits non-empty RFB DATA under the queue lock, publishes activity, clears an armed waiter under lock, then signals outside the lock. | primary discriminator |
+| `pstvnc_transport_rfb_flow_activity_snapshot` | function | consumer rendezvous | public/internal | Captures the protected activity sequence. | qualified target |
+| `pstvnc_transport_rfb_flow_wait_activity` | function | consumer rendezvous | public/internal | Implements ledge single-waiter arm/block/wake/recheck semantics. | primary discriminator |
+| `pstvnc_transport_rfb_flow_read_exact` / `read_available` | function family | consumer path | public/internal | Synchronized wrappers around the qualified logical byte channel. | qualified target |
+| `pstvnc_transport_rfb_flow_available` | function | queue observation | public/internal | Reads queue occupancy under the shared queue lock. | qualified target |
+| `pstvnc_transport_rfb_flow_release` | function | resource lifetime | public/internal | Reclaims rendezvous semaphores only when no activity waiter remains armed. | qualified target |

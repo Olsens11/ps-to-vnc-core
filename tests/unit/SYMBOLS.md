@@ -15,6 +15,7 @@ coverage gaps without replacing the code under test.
 | `transport_physical_readiness_test.c` | Real host socketpair coverage for timeout/readable/error returns from `wait_readable()`. | clean rung-02 addition |
 | `pi_wire_protocol_test.py` | Pi exact HELLO/ACCEPT bytes, generic frame round trip, invalid-contract rejection. | clean rung-02 addition |
 | `transport_rfb_channel_test.c` | Capacity rejection, circular wrap, partial/exact reads, producer activity, residual discard. | exact ledge import |
+| `transport_rfb_flow_test.c` | Real pthread concurrency coverage for the extracted single-waiter activity rendezvous, including blocked-waiter wake and activity-before-wait. | clean rung-03B addition |
 
 The imported physical-stream fixture intentionally does not mock product
 framing functions; it links the real `physical_stream.c` and `protocol.c`.

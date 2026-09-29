@@ -268,3 +268,47 @@ above this storage primitive, still without the RFB parser/display/application.
 
 No ledge backport is required from 03A because no product behavioral fix was
 made.
+
+## 2026-09-28 — Rung 03B RFB activity-rendezvous extraction
+
+Purpose: isolate the first concurrent logical-RFB mechanism above the qualified
+03A byte channel without importing ledge's mixed ~3000-line Transport runtime.
+
+Starting clean authority:
+`f337ff1e16e79b8559dfb859ce579401b12fbb86`
+
+Extraction source authority:
+`Olsens11/PS-to-VNC@048d3dfb082b74760c3fc54bf37559fc68c4f038`,
+`src/transport/runtime.c`.
+
+New product module:
+- `src/transport/rfb_flow.c` —
+  `cecf562dfed5cb81b0e0ba518bd05a3e52c4863173e70375ee24a131279f0f1c`
+- `src/transport/rfb_flow.h` —
+  `a17266cd997c73ebb1048f4355557599f6c9e8176087a0faa8f37b18fa788b24`
+
+Exact behavioral source map and intentional scope reductions are recorded in
+`provenance/RUNG03B_ACTIVITY_EXTRACTION.md`.
+
+The extraction preserves the ledge activity invariant:
+- activity sequence and waiter armed-state share the queue lock;
+- a publisher clears the armed-state while still holding that lock;
+- the activity semaphore is signaled only after the queue lock is released;
+- a returning waiter reacquires the same lock and rejects a wake if the armed
+  state was not cleared by the publisher.
+
+Deferred from this rung:
+- RFB inbound/outbound credit;
+- provider terminal state;
+- stop/receiver lifecycle;
+- synchronous outbound slot ownership;
+- RFB parser/display/application.
+
+Host qualification:
+- complete existing clean host suite remains PASS;
+- new `transport_rfb_flow_test` proves a genuinely blocked pthread waiter wakes;
+- activity published before `wait_activity()` is observed without blocking;
+- the first fixture revision incorrectly observed an unsynchronized struct field
+  from another pthread and could hang; the fixture was corrected to observe
+  waiter entry through a pthread condition inside the semaphore model. No product
+  source change resulted from that fixture bug.
