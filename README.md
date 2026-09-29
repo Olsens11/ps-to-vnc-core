@@ -10,16 +10,22 @@ deliberate backport into ledge.
 
 ## Current baseline
 
-Checkpoint 01 - platform + private Ethernet + TCP round trip: HARDWARE QUALIFIED
+Checkpoint 02 - physical PSTV Wire: HARDWARE QUALIFIED
 
 Included product modules:
 - `src/platform/ps2_system.*`
 - `src/platform/ps2_network.*`
+- `src/transport/protocol.*`
+- `src/transport/physical_stream.*`
+- `pi/wire_protocol.py`
 
-Everything above the platform/network layer is intentionally absent.
+Logical transport queues/runtime, RFB, display, input, audio, and MPEG remain
+intentionally absent.
 
-The qualified checkpoint proves active duplex TCP, 60 seconds of application
-silence, Pi-initiated receive-after-idle, and resumed duplex traffic.
+The qualified baseline proves platform/network duplex TCP plus exact Wire Q4,
+framed traffic through the 8192-byte payload ceiling, deliberately fragmented
+Pi-to-PS2 frames, a 60-second select-based idle/readiness interval, framed wake,
+and resumed traffic.
 
 Build with `./scripts/build.sh`. Hardware evidence and exact authorities are
 recorded in `docs/TESTED_CHECKPOINTS.md`.

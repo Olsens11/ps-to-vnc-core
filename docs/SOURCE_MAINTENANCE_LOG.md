@@ -147,3 +147,43 @@ Provenance convention established:
 `provenance/LEDGE_IMPORTS.sha256` is immutable original-import evidence.
 `provenance/CURRENT_SOURCE.sha256` is the build-time current-source guard and
 may change only through an intentional logged maintenance/fix commit.
+
+### Rung 02 hardware qualification result
+
+Hardware apparatus/source authority:
+`262ad00dcb0989abcdbd2701b17b5a579ad51c09`
+
+Exact candidate:
+- ELF SHA-256:
+  `c2b59600e829bd3f9b0333ba16420a0328739e240695677de66a737cfd1258eb`
+- ELF bytes: `2300344`
+- PT_LOAD SHA-256:
+  `e8ab4f13c0fe99f55fd2c4524c0cf5cd9d783e5ebdf8eabe145eaaa5f34601ed`
+- PT_LOAD bytes: `363784`
+- two consecutive pinned builds produced the exact same ELF SHA-256;
+- FTP archival and rolling-target readback both matched the candidate.
+
+Observed hardware sequence:
+- Q4 HELLO/ACCEPT: PASS;
+- phase 1: 128/128 framed bidirectional rounds PASS;
+- payload set included zero length and the 8192-byte Wire maximum;
+- Pi-to-PS2 frames were deliberately fragmented across multiple socket sends;
+- deliberate idle began at 2026-09-28T21:34:22.372255-04:00;
+- framed wake passed at 2026-09-28T21:35:22.381226-04:00;
+- PS2 reported 57,513 empty select-based readiness polls before wake;
+- phase 2: 128/128 framed bidirectional rounds PASS;
+- final framed handshake: PASS;
+- checkpoint: PASS.
+
+Engineering conclusion:
+The isolated imported physical-stream readiness/framing layer does not reproduce
+the ledge HW1 long-idle stall. Its real `select()` path survived approximately
+60 seconds of repeated empty polls and then consumed fragmented inbound Wire
+data. Therefore any later reproduction must come from an interaction introduced
+above this layer, or from a workload/ownership condition not present in this
+bounded checkpoint.
+
+No ledge backport is required from this rung yet because no product behavioral
+fix was made. The only product-source divergence is the prequalification
+comment-placement correction in `physical_stream.h`; original import identity
+remains preserved separately.

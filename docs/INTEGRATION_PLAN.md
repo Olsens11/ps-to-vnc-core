@@ -26,9 +26,10 @@ repository and validated in that larger integration context.
 
 01 Platform/network - IOP bootstrap, Ethernet, duplex TCP, long-idle receive.
    Status: HARDWARE QUALIFIED.
-02 Physical PSTV Wire - protocol + physical stream; repeat active -> long idle
-   -> one inbound frame -> active.
+02 Physical PSTV Wire - protocol + physical stream; active -> long idle ->
+   one inbound frame -> active. Status: HARDWARE QUALIFIED.
 03 Logical RFB transport - queue, credit, rendezvous, long-idle synthetic traffic.
+   Status: NEXT.
 04 RFB + framebuffer - controlled Raw updates first, then required encodings.
 05 Display - stable visible desktop at the selected working mode.
 06 Input - controller, pointer, buttons, keyboard, OSK incrementally.

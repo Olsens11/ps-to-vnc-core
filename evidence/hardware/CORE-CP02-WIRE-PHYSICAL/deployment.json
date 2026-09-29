@@ -1,0 +1,23 @@
+{
+  "deployed_at_utc": "2026-09-29T01:32:53.715845+00:00",
+  "deployment_result": "PASS",
+  "elf_bytes": 2300344,
+  "elf_path": "/home/ps2/src/PS-to-VNC-core/build/hardware/wire-physical/PS-to-VNC-wire-physical.ELF",
+  "elf_sha256": "c2b59600e829bd3f9b0333ba16420a0328739e240695677de66a737cfd1258eb",
+  "ftp_host": "192.168.50.2",
+  "ftp_port": 21,
+  "ftp_readback": "PASS",
+  "hardware_run": false,
+  "repository_branch": "main",
+  "repository_context": "/home/ps2/src/PS-to-VNC-core",
+  "repository_context_source": "EXPLICIT",
+  "repository_head": "262ad00dcb0989abcdbd2701b17b5a579ad51c09",
+  "rolling_readback_bytes": 2300344,
+  "rolling_readback_sha256": "c2b59600e829bd3f9b0333ba16420a0328739e240695677de66a737cfd1258eb",
+  "rolling_remote": "/mass/0/PS2VNC.ELF",
+  "test_id": "CORE-CP02-WIRE-PHYSICAL",
+  "unique_readback_bytes": 2300344,
+  "unique_readback_sha256": "c2b59600e829bd3f9b0333ba16420a0328739e240695677de66a737cfd1258eb",
+  "unique_remote": "/mass/0/PS2VNC-CORE-CP02-WIRE-PHYSICAL-c2b59600.ELF",
+  "version": 1
+}
