@@ -4,8 +4,9 @@ DIRECTORY=scripts
 GENERATION=STAGED_RECONSTRUCTION
 COVERAGE=CURRENT
 
-This directory currently owns the pinned, provenance-guarded checkpoint build
-entry point.
+This directory owns pinned, current-source-guarded PS2 checkpoint build entry
+points. `build.sh` reproduces checkpoint 01; `build-wire-physical.sh` builds the
+rung-02 physical Wire discriminator.
 
 | Name | Kind | File | Owner | Scope | Description |
 |---|---|---|---|---|---|
@@ -17,3 +18,8 @@ entry point.
 | `CFLAGS` | shell variable | build.sh | container compile | inner shell | Holds the qualified EE optimization/warning/debug flags. |
 | `INCS` | shell variable | build.sh | container compile | inner shell | Holds PS2SDK and clean source include paths. |
 | `B` / `G` | shell variable | build.sh | container build | inner shell | Short names for build and generated-IRX directories. |
+| `ROOT` | shell variable | build-wire-physical.sh | build entry point | script | Resolves the clean repository root. |
+| `IMAGE` | shell variable | build-wire-physical.sh | toolchain authority | script | Pins the same exact PS2DEV image digest used by checkpoint 01. |
+| `BUILD_DIR` / `ELF` | shell variable family | build-wire-physical.sh | checkpoint 02 artifacts | script | Name the wire-physical output directory and ELF. |
+| `CC` / `CFLAGS` / `INCS` | shell variable family | build-wire-physical.sh | container compile | inner shell | Define compiler, flags, and platform/transport include roots. |
+| `B` / `G` | shell variable family | build-wire-physical.sh | container build | inner shell | Short names for output and generated-IRX directories. |

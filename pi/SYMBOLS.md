@@ -40,3 +40,20 @@ helpers are present from ledge but remain semantically deferred.
 | `recv_exact` / `receive_record` / `expect_record` | function family | peer receive/validation | module | Reads and validates exact checkpoint records. |
 | `echo_rounds` | function | active workload | module | Validates and echoes a numbered checkpoint phase. |
 | `main` | function | checkpoint coordinator | entry point | Runs checkpoint 01 and emits final PASS/FAIL evidence. |
+
+## Checkpoint 02 peer
+
+`wire_physical_probe.py` is test apparatus. It imports the real
+`wire_protocol.py`; framing is not reimplemented in the peer.
+
+| Name | Kind | Owner | Scope | Description |
+|---|---|---|---|---|
+| `HOST` / `PORT` / `SESSION_ID` | constant family | checkpoint listener/Q4 | module | Bind the private test endpoint and publish one nonzero fixture session ID. |
+| `ACTIVE_ROUNDS` / `IDLE_SECONDS` / `PAYLOAD_SIZES` | constant family | workload | module | Define 128-round active phases, 60-second silence, and payloads through 8192 bytes. |
+| `recv_exact` / `recv_frame` | function family | framed receive | module | Read exact stream bytes and enforce direction-local Wire sequence. |
+| `send_fragmented` | function | framed send | module | Splits Pi-to-PS2 frames across several socket sends. |
+| `expected_payload` / `require_data_frame` | function family | validation | module | Independently reconstruct and validate opaque test payloads/envelopes. |
+| `run_active_phase` | function | active workload | module | Validates PS2 frames and sends fragmented exact echoes. |
+| `establish` | function | Q4 fixture | module | Validates exact HELLO versions and returns sequence-1 ACCEPT. |
+| `run_idle_wake` | function | idle discriminator | module | Holds application traffic silent for 60 seconds, injects wake, and records PS2 empty-poll count. |
+| `finish` / `main` | function family | checkpoint coordination | module | Complete final handshake and emit timestamped PASS/FAIL evidence. |
