@@ -84,3 +84,16 @@ helpers are present from ledge but remain semantically deferred.
 | `send_rfb` | function | producer fixture | module | Sends one fragmented channel-1 DATA frame. |
 | `recv_control` / `send_control` | function family | pacing protocol | module | Sequence-check and exchange exact checkpoint control records. |
 | `main` | function | checkpoint coordinator | entry point | Sends pre-published frame, paces 128 blocked wakes, holds 60-second idle, then paces 128 more wakes and verifies final activity count. |
+
+## Checkpoint 03B diagnostic peer
+
+`rfb_activity_diag_probe.py` preserves the 03B TCP workload, adds a concurrent
+UDP 5999 stage observer, and deliberately keeps TCP open after sending DONE until
+the PS2 closes first.
+
+| Name | Kind | Owner | Scope | Description |
+|---|---|---|---|---|
+| `TELEMETRY_MAGIC` / `TELEMETRY` | constant/codec | diagnostic observer | module | Decode exact 20-byte stage records. |
+| `STAGE_NAMES` | mapping | diagnostic observer | module | Human-readable names for every PS2 post-proof stage ID. |
+| `udp_observer` | function | diagnostic observer | background thread | Receives and prints ordered stage telemetry without controlling the DUT. |
+| post-DONE TCP hold | behavior | teardown discriminator | main path | Keeps the Pi side open for up to 120 seconds so only the PS2 can initiate normal checkpoint close. |

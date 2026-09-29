@@ -27,3 +27,4 @@ rung-02 physical Wire discriminator.
 | `CC` / `CFLAGS` / `INCS` | shell variable family | build-rfb-channel.sh | container compile | inner shell | Define pinned EE compilation for platform + physical Wire + RFB channel. |
 | `BUILD_DIR` / `ELF` | shell variable family | build-rfb-activity.sh | checkpoint 03B artifacts | script | Name the synchronized-RFB-activity output directory and ELF. |
 | `CC` / `CFLAGS` / `INCS` | shell variable family | build-rfb-activity.sh | container compile | inner shell | Define pinned EE compilation for platform + Wire + logical queue + activity extraction. |
+| `BUILD_DIR` / `ELF` | shell variable family | build-rfb-activity-diag.sh | 03B diagnostic artifacts | script | Names an isolated diagnostic build directory/ELF so the qualified 03B candidate is never overwritten. |

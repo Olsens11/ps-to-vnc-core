@@ -351,3 +351,36 @@ Diagnostic follow-up:
 A separate 03B-DIAG apparatus instruments all post-proof boundaries at once over
 best-effort UDP 5999, while the Pi keeps the PSTV TCP session open after DONE
 until the PS2 closes it. This avoids using Pi-initiated FIN as teardown evidence.
+
+### Rung 03B diagnostic apparatus
+
+Purpose: localize the post-proof black-screen boundary from hardware attempt 01
+without changing any admitted product module.
+
+Instrumentation-only files:
+- `tests/hardware/rfb_activity_diag/main.c` —
+  `5a598ed6191191b7c35e8a24a14017ca7f2504fbf41c835de71f10192fa11a1e`
+- `pi/rfb_activity_diag_probe.py` —
+  `55a32eb10a05dd2a2edc381c2e43328853daae15b452b9bdc51ffedd297a640a`
+- `scripts/build-rfb-activity-diag.sh` —
+  `ac121c194c1011a345dd2b0c245d95e022d6a9e3505fad74c4df3baf35b958f8`
+
+Diagnostic design:
+- links the same platform/network, protocol, physical-stream, rfb-channel, and
+  rfb-flow product sources as the 03B candidate;
+- adds only a test-harness UDP 5999 sideband;
+- each 20-byte UDP record carries magic, monotonic telemetry sequence, stage ID,
+  and two state values;
+- all 31 PS2 stage IDs are mechanically checked against the Pi decoder;
+- UDP sends are best effort and their return values are ignored;
+- final boundaries are instrumented before and after each call, including DONE
+  receive, dormant wait, DeleteThread, each harness semaphore deletion,
+  rfb-flow release, physical-stream release, platform descriptor close, and
+  OSDSYS entry;
+- the Pi peer no longer exits immediately after sending DONE. It keeps TCP open
+  for up to 120 seconds and waits for the PS2 to close first;
+- after PS2 TCP close, the UDP observer remains alive briefly so an OSDSYS entry
+  marker can still arrive.
+
+This diagnostic binary is not itself a qualification result. Its job is only to
+locate the first post-proof boundary that does not return.
