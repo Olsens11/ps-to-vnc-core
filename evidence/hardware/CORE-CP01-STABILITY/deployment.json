@@ -1,0 +1,17 @@
+{
+  "deployed_at_utc": "2026-09-29T00:53:01.466208+00:00",
+  "deployment_result": "PASS",
+  "elf_bytes": 2241164,
+  "elf_sha256": "14d8faf57139482f0561d68fbb50fca8ee63b7aee82b63147f3ccc4987af3b26",
+  "ftp_readback": "PASS",
+  "repository_branch": "main",
+  "repository_head": "21590f4c2425c68271254e8f38ce09189cae9c0f",
+  "rolling_readback_bytes": 2241164,
+  "rolling_readback_sha256": "14d8faf57139482f0561d68fbb50fca8ee63b7aee82b63147f3ccc4987af3b26",
+  "rolling_remote": "/mass/0/PS2VNC.ELF",
+  "test_id": "CORE-CP01-STABILITY",
+  "unique_readback_bytes": 2241164,
+  "unique_readback_sha256": "14d8faf57139482f0561d68fbb50fca8ee63b7aee82b63147f3ccc4987af3b26",
+  "unique_remote": "/mass/0/PS2VNC-CORE-CP01-STABILITY-14d8faf5.ELF",
+  "version": 1
+}
