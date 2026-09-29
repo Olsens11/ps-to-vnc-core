@@ -105,3 +105,50 @@ The isolated physical-stream `select()` readiness mechanism survives a
 hardware. This does not by itself prove the complete ledge runtime owner/dispatch
 architecture, but it rules out a simple inherent long-idle failure of the
 physical-stream readiness/framing layer under this qualified workload.
+
+## 03A - Logical RFB byte channel
+
+Status: HARDWARE QUALIFIED
+
+Qualified authority:
+- Git commit: `f0d2bfbc8df8716604087eb0a3fe7e61e32fb348`
+- ELF SHA-256: `eeec1395953aa554c4eea775a732983212cefd245a4230b82d601c82cc1ef966`
+- ELF bytes: `2312488`
+- PT_LOAD SHA-256: `006c19d0992b166a8d1f92957d5a57f1242bd01bb16c3a2b47fcffa16f4e0c9f`
+- PT_LOAD bytes: `366088`
+- deployment/readback: PASS
+- hardware test ID: `CORE-CP03A-RFB-CHANNEL`
+
+Qualified behavior:
+- exact ledge `rfb_channel.[ch]` source unchanged;
+- 1024-byte logical circular queue initialized empty;
+- multiple synthetic RFB DATA commits exercised queue growth and wraparound;
+- partial read consumed only requested committed bytes;
+- exact read crossed frame/queue boundaries correctly;
+- zero-length commit left activity generation unchanged;
+- short exact-read failure left queue contents and caller buffer unchanged;
+- exact residual discard succeeded only for the expected residual count and did
+  not advance producer activity;
+- 60 seconds of application silence exercised the qualified physical readiness
+  loop below this module;
+- post-idle synthetic RFB DATA committed successfully;
+- activity generation advanced to 6;
+- post-idle exact read drained the queue back to 0 bytes;
+- final framed handshake completed.
+
+Preserved evidence:
+- `evidence/hardware/CORE-CP03A-RFB-CHANNEL/HARDWARE-AUTHORITY.env`
+- `evidence/hardware/CORE-CP03A-RFB-CHANNEL/deployment.json`
+- `evidence/hardware/CORE-CP03A-RFB-CHANNEL/probe.log`
+
+Scope:
+This qualifies only backend-independent logical RFB byte storage on top of the
+already-qualified physical Wire path. It does not qualify RFB credit policy,
+activity semaphores, outbound-credit waiting, synchronous outbound submission,
+receiver-thread ownership, parser behavior, or framebuffer/application code.
+
+Interpretation:
+The ledge logical RFB circular queue itself remains correct across wraparound,
+mixed read sizes, terminal residual discard, and a long-idle inbound commit/read
+on real PS2 hardware. The HW1 failure boundary therefore remains above this
+storage primitive or depends on an interaction absent from this bounded rung.

@@ -29,7 +29,8 @@ repository and validated in that larger integration context.
 02 Physical PSTV Wire - protocol + physical stream; active -> long idle ->
    one inbound frame -> active. Status: HARDWARE QUALIFIED.
 03 Logical RFB transport - queue, credit, rendezvous, long-idle synthetic traffic.
-   Status: NEXT.
+   - 03A logical RFB byte channel: HARDWARE QUALIFIED.
+   - 03B credit/activity/rendezvous ownership: NEXT.
 04 RFB + framebuffer - controlled Raw updates first, then required encodings.
 05 Display - stable visible desktop at the selected working mode.
 06 Input - controller, pointer, buttons, keyboard, OSK incrementally.

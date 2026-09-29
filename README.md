@@ -10,24 +10,25 @@ deliberate backport into ledge.
 
 ## Current baseline
 
-Checkpoint 02 - physical PSTV Wire: HARDWARE QUALIFIED
+Checkpoint 03A - logical RFB byte channel: HARDWARE QUALIFIED
 
 Included product modules:
 - `src/platform/ps2_system.*`
 - `src/platform/ps2_network.*`
 - `src/transport/protocol.*`
 - `src/transport/physical_stream.*`
+- `src/transport/rfb_channel.*`
 - `pi/wire_protocol.py`
 
-Logical transport queues/runtime, RFB, display, input, audio, and MPEG remain
-intentionally absent.
+RFB credit/activity rendezvous, the combined Transport runtime, the RFB parser,
+display, input, audio, and MPEG remain intentionally absent.
 
-The qualified baseline proves platform/network duplex TCP plus exact Wire Q4,
-framed traffic through the 8192-byte payload ceiling, deliberately fragmented
-Pi-to-PS2 frames, a 60-second select-based idle/readiness interval, framed wake,
-and resumed traffic.
+The qualified baseline proves platform/network duplex TCP, exact physical Wire
+Q4/framing/readiness, and logical RFB circular-byte storage including wraparound,
+mixed reads, residual discard, and a post-idle inbound commit/read.
 
-Build with `./scripts/build.sh`. Hardware evidence and exact authorities are
+Checkpoint-specific pinned builds live under `scripts/build-*.sh`; checkpoint 01
+remains reproducible through `./scripts/build.sh`. Hardware evidence and exact authorities are
 recorded in `docs/TESTED_CHECKPOINTS.md`.
 
 ## Working method

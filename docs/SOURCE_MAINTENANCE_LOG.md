@@ -226,3 +226,45 @@ The immutable import manifest records historical ledge bytes and can legitimatel
 differ from the maintained live tree after a logged edit. New imports are proved
 against the exact ledge checkout; the current-source manifest guards live build
 inputs.
+
+### Rung 03A hardware qualification result
+
+Hardware apparatus/source authority:
+`f0d2bfbc8df8716604087eb0a3fe7e61e32fb348`
+
+Exact candidate:
+- ELF SHA-256:
+  `eeec1395953aa554c4eea775a732983212cefd245a4230b82d601c82cc1ef966`
+- ELF bytes: `2312488`
+- PT_LOAD SHA-256:
+  `006c19d0992b166a8d1f92957d5a57f1242bd01bb16c3a2b47fcffa16f4e0c9f`
+- PT_LOAD bytes: `366088`
+- two consecutive pinned builds produced the exact same ELF SHA-256;
+- FTP archival and rolling-target readback both matched the candidate.
+
+Observed hardware sequence:
+- Q4 establishment: PASS;
+- pre-idle logical queue sequence: PASS;
+- 1024-byte circular queue wraparound: PASS;
+- partial and exact reads across committed-frame boundaries: PASS;
+- zero-length commit left activity generation unchanged: PASS;
+- failed short exact read preserved queue and caller buffer: PASS;
+- exact residual discard semantics: PASS;
+- deliberate idle began at 2026-09-28T22:29:55.044409-04:00;
+- post-idle RFB DATA commit/read passed at
+  2026-09-28T22:30:55.054603-04:00;
+- PS2 reported 57,512 empty physical-readiness polls before wake;
+- final activity generation: 6;
+- final available queue bytes: 0;
+- final framed handshake: PASS;
+- checkpoint: PASS.
+
+Engineering conclusion:
+The imported logical RFB byte-storage primitive does not reproduce the HW1
+long-idle failure. It remains correct across circular wrap, mixed consumption,
+residual discard, and a post-idle inbound commit/read on real PS2 hardware.
+The next bounded target is therefore the RFB credit/activity/rendezvous ownership
+above this storage primitive, still without the RFB parser/display/application.
+
+No ledge backport is required from 03A because no product behavioral fix was
+made.

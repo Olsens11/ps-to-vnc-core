@@ -1,0 +1,23 @@
+{
+  "deployed_at_utc": "2026-09-29T02:17:56.239643+00:00",
+  "deployment_result": "PASS",
+  "elf_bytes": 2312488,
+  "elf_path": "/home/ps2/src/PS-to-VNC-core/build/hardware/rfb-channel/PS-to-VNC-rfb-channel.ELF",
+  "elf_sha256": "eeec1395953aa554c4eea775a732983212cefd245a4230b82d601c82cc1ef966",
+  "ftp_host": "192.168.50.2",
+  "ftp_port": 21,
+  "ftp_readback": "PASS",
+  "hardware_run": false,
+  "repository_branch": "main",
+  "repository_context": "/home/ps2/src/PS-to-VNC-core",
+  "repository_context_source": "EXPLICIT",
+  "repository_head": "f0d2bfbc8df8716604087eb0a3fe7e61e32fb348",
+  "rolling_readback_bytes": 2312488,
+  "rolling_readback_sha256": "eeec1395953aa554c4eea775a732983212cefd245a4230b82d601c82cc1ef966",
+  "rolling_remote": "/mass/0/PS2VNC.ELF",
+  "test_id": "CORE-CP03A-RFB-CHANNEL",
+  "unique_readback_bytes": 2312488,
+  "unique_readback_sha256": "eeec1395953aa554c4eea775a732983212cefd245a4230b82d601c82cc1ef966",
+  "unique_remote": "/mass/0/PS2VNC-CORE-CP03A-RFB-CHANNEL-eeec1395.ELF",
+  "version": 1
+}
