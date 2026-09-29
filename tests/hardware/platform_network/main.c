@@ -14,6 +14,7 @@
 #define CHECKPOINT_HELLO "PSTVNC_CORE_PLATFORM_NETWORK_HELLO\n"
 #define CHECKPOINT_ACK   "PSTVNC_CORE_PLATFORM_NETWORK_ACK\n"
 #define CHECKPOINT_PASS  "PSTVNC_CORE_PLATFORM_NETWORK_PASS\n"
+#define CHECKPOINT_DONE  "PSTVNC_CORE_PLATFORM_NETWORK_DONE\n"
 
 static int send_all(int socket_fd, const char *data, size_t length)
 {
@@ -44,7 +45,9 @@ int main(int argc, char **argv)
     static const char hello[] = CHECKPOINT_HELLO;
     static const char expected_ack[] = CHECKPOINT_ACK;
     static const char pass[] = CHECKPOINT_PASS;
+    static const char expected_done[] = CHECKPOINT_DONE;
     char ack[sizeof(expected_ack) - 1u];
+    char done[sizeof(expected_done) - 1u];
     int socket_fd = -1;
     int success = 0;
 
@@ -68,6 +71,10 @@ int main(int argc, char **argv)
     if (memcmp(ack, expected_ack, sizeof(ack)) != 0)
         goto done;
     if (!send_all(socket_fd, pass, sizeof(pass) - 1u))
+        goto done;
+    if (!receive_exact(socket_fd, done, sizeof(done)))
+        goto done;
+    if (memcmp(done, expected_done, sizeof(done)) != 0)
         goto done;
 
     success = 1;

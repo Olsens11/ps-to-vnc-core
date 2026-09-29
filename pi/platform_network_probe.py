@@ -10,6 +10,7 @@ PORT = 5959
 HELLO = b"PSTVNC_CORE_PLATFORM_NETWORK_HELLO\n"
 ACK = b"PSTVNC_CORE_PLATFORM_NETWORK_ACK\n"
 PASS = b"PSTVNC_CORE_PLATFORM_NETWORK_PASS\n"
+DONE = b"PSTVNC_CORE_PLATFORM_NETWORK_DONE\n"
 
 def stamp(message: str) -> None:
     print(f"{datetime.now().astimezone().isoformat()} {message}", flush=True)
@@ -41,10 +42,13 @@ def main() -> int:
                 return 1
             stamp("HELLO=PASS")
             conn.sendall(ACK)
+
             result = recv_exact(conn, len(PASS))
             if result != PASS:
                 stamp(f"CHECKPOINT=FAIL bad_result={result!r}")
                 return 1
+            stamp("PASS_MESSAGE=RECEIVED")
+            conn.sendall(DONE)
             stamp("CHECKPOINT=PASS")
             return 0
 
