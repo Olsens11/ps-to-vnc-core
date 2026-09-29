@@ -318,3 +318,36 @@ The first target build of `tests/hardware/rfb_activity/main.c` redundantly
 redeclared PS2SDK's `_gp` symbol with the wrong type. The target header already
 owns that declaration, so the redundant test-only declaration was removed. The
 full host suite and target build then passed. No product-source behavior changed.
+
+### Rung 03B hardware attempt 01 — activity PASS, post-proof lifecycle unresolved
+
+Exact candidate:
+- source/apparatus commit:
+  `d8f91996cdd14054d38b87450b098657000b433e`
+- ELF SHA-256:
+  `b925e633acf531bbfcdf73eb90f814ec970101f6d73e04167f1f2d398112d8e8`
+- ELF bytes: `2327568`
+- PT_LOAD SHA-256:
+  `7f3e54ed41d6aed1baf7fb828b4005745bad4a3c718287eb13697c5ba22ad11c`
+- PT_LOAD bytes: `368136`;
+- FTP archival and rolling readback: PASS.
+
+Observed activity proof:
+- activity published before consumer wait: PASS;
+- 128 armed/blocking EE-thread wakes before idle: PASS;
+- 60-second armed idle: PASS;
+- post-idle wake: PASS after 57,374 empty physical-readiness polls;
+- 128 armed/blocking wakes after idle: PASS;
+- final activity sequence: 258;
+- Pi-side activity/final control sequence reached PASS.
+
+Operator observation:
+The PS2 remained black instead of returning to FreeMcBoot after the proof.
+Therefore 03B is not yet declared a complete checkpoint PASS. The activity
+rendezvous itself passed; the unresolved boundary is after the proof, during the
+final DONE / cleanup / exit lifecycle.
+
+Diagnostic follow-up:
+A separate 03B-DIAG apparatus instruments all post-proof boundaries at once over
+best-effort UDP 5999, while the Pi keeps the PSTV TCP session open after DONE
+until the PS2 closes it. This avoids using Pi-initiated FIN as teardown evidence.

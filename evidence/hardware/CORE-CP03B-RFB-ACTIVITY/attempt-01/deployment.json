@@ -1,0 +1,23 @@
+{
+  "deployed_at_utc": "2026-09-29T02:50:20.360190+00:00",
+  "deployment_result": "PASS",
+  "elf_bytes": 2327568,
+  "elf_path": "/home/ps2/src/PS-to-VNC-core/build/hardware/rfb-activity/PS-to-VNC-rfb-activity.ELF",
+  "elf_sha256": "b925e633acf531bbfcdf73eb90f814ec970101f6d73e04167f1f2d398112d8e8",
+  "ftp_host": "192.168.50.2",
+  "ftp_port": 21,
+  "ftp_readback": "PASS",
+  "hardware_run": false,
+  "repository_branch": "main",
+  "repository_context": "/home/ps2/src/PS-to-VNC-core",
+  "repository_context_source": "EXPLICIT",
+  "repository_head": "d8f91996cdd14054d38b87450b098657000b433e",
+  "rolling_readback_bytes": 2327568,
+  "rolling_readback_sha256": "b925e633acf531bbfcdf73eb90f814ec970101f6d73e04167f1f2d398112d8e8",
+  "rolling_remote": "/mass/0/PS2VNC.ELF",
+  "test_id": "CORE-CP03B-RFB-ACTIVITY",
+  "unique_readback_bytes": 2327568,
+  "unique_readback_sha256": "b925e633acf531bbfcdf73eb90f814ec970101f6d73e04167f1f2d398112d8e8",
+  "unique_remote": "/mass/0/PS2VNC-CORE-CP03B-RFB-ACTIVITY-b925e633.ELF",
+  "version": 1
+}
