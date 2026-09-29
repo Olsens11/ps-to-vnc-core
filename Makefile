@@ -1,3 +1,7 @@
+# Checkpoint 01 PS2 build graph.
+# Builds only the qualified platform/network hardware harness and its imported
+# platform dependencies; higher product modules are deliberately absent.
+
 BUILD_DIR ?= build/hardware/platform-network
 GEN_DIR := $(BUILD_DIR)/generated
 EE_BIN ?= $(BUILD_DIR)/PS-to-VNC-platform-network.ELF

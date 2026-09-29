@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Build the current clean hardware checkpoint in the pinned PS2DEV image.
+# Verifies imported ledge file/dependency hashes before compiling so a build
+# cannot silently drift away from the recorded reconstruction provenance.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
