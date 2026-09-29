@@ -187,3 +187,42 @@ No ledge backport is required from this rung yet because no product behavioral
 fix was made. The only product-source divergence is the prequalification
 comment-placement correction in `physical_stream.h`; original import identity
 remains preserved separately.
+
+## 2026-09-28 — Rung 03A logical RFB channel import/prequalification
+
+Purpose: admit only ledge's backend-independent logical RFB byte-storage module
+on top of the hardware-qualified physical Wire baseline. Credit policy,
+semaphore rendezvous, receiver/runtime ownership, and the RFB parser remain
+absent.
+
+Starting clean authority:
+`3e54ecbd22c571113793626bc528e761f0135cfb`
+
+Exact import commit:
+`9f4a2fcbe5b5d057964263d8fb737158bc5f4b26`
+
+Ledge source authority:
+`048d3dfb082b74760c3fc54bf37559fc68c4f038`
+
+Imported identities:
+- `src/transport/rfb_channel.c` —
+  `cbefd57ec80335316550c05ea4d60622b32305f9a8e9050503dfd19add049bff`
+- `src/transport/rfb_channel.h` —
+  `63516a42c009175e30d8bf92744d596f38d670669e8ec3bccc0f4b935d924da9`
+- `tests/unit/transport_rfb_channel_test.c` —
+  `c56b1dc2f30f767a40bff697495b971f2540098cf76be5d08eb422e3b4f81ae8`
+
+Prequalification review:
+- module ownership is narrow and clear;
+- no product-source comment or naming correction was required;
+- existing host fixture covers capacity rejection, wraparound, incremental and
+  exact consumption, producer activity, and residual discard;
+- full clean host gate passes with the imported module unchanged;
+- build-apparatus wiring was normalized after an initial missing Make target;
+  no product behavior was involved.
+
+Provenance-process clarification:
+The immutable import manifest records historical ledge bytes and can legitimately
+differ from the maintained live tree after a logged edit. New imports are proved
+against the exact ledge checkout; the current-source manifest guards live build
+inputs.

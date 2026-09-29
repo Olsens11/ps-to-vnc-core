@@ -23,7 +23,10 @@ Every imported product file must retain a recorded source authority and
 cryptographic identity. A later cleanup must never erase that provenance.
 
 `provenance/LEDGE_IMPORTS.sha256` records immutable original import identities.
-It is historical evidence and is never rewritten to match later repairs.
+New imports are appended, but existing entries are never rewritten to match
+later repairs. Once any imported file intentionally diverges, do not run the
+whole original-import manifest against the live worktree; verify a new import
+directly against the recorded ledge source checkout/commit instead.
 `provenance/CURRENT_SOURCE.sha256` records the expected current product/dependency
 bytes and is the manifest build tooling verifies. Intentional maintenance or a
 proven fix updates the current manifest and is recorded in the maintenance log;

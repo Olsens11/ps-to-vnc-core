@@ -35,3 +35,16 @@ runtime threads are deliberately absent.
 | `pstvnc_transport_physical_stream_receive_frame` | function | physical_stream.[ch] | framed receive | public/internal | Reads exact header+payload, validates sequence/capacity, then advances receive sequence. | qualified target |
 | `pstvnc_transport_physical_stream_shutdown_io` | function | physical_stream.[ch] | I/O interruption | public/internal | Calls `shutdown` without releasing descriptor ownership. | host-qualified; lifecycle use deferred |
 | `pstvnc_transport_physical_stream_release` | function | physical_stream.[ch] | ownership release | public/internal | Closes the adopted socket, deletes send semaphore, and resets lineage state. | qualified target |
+
+## Rung 03A logical RFB byte channel
+
+| Name | Kind | File | Owner | Scope | Description | Rung 03A status |
+|---|---|---|---|---|---|---|
+| `pstvnc_transport_rfb_channel_t` | structure | rfb_channel.h | logical RFB storage | public/internal | Caller-storage-backed circular byte stream plus producer activity generation. | qualified target |
+| `pstvnc_transport_rfb_channel_initialize` | function | rfb_channel.[ch] | logical RFB storage | public/internal | Binds caller-owned storage and resets an empty channel. | qualified target |
+| `pstvnc_transport_rfb_channel_commit` | function | rfb_channel.[ch] | producer commit | public/internal | Atomically commits one complete inbound DATA payload when capacity permits. | qualified target |
+| `pstvnc_transport_rfb_channel_read_available` | function | rfb_channel.[ch] | consumer read | public/internal | Consumes up to a requested count from already committed bytes. | qualified target |
+| `pstvnc_transport_rfb_channel_read_exact` | function | rfb_channel.[ch] | consumer read | public/internal | Consumes exactly the requested count or leaves the queue unchanged. | qualified target |
+| `pstvnc_transport_rfb_channel_discard_residual` | function | rfb_channel.[ch] | terminal discard | public/internal | Discards exactly the expected residual without treating it as parser consumption/activity. | qualified target |
+| `pstvnc_transport_rfb_channel_available` | function | rfb_channel.[ch] | queue observation | public/internal | Reports committed unread bytes. | qualified target |
+| `pstvnc_transport_rfb_channel_activity_generation` | function | rfb_channel.[ch] | producer activity | public/internal | Reports generation incremented by each non-empty successful commit. | qualified target |

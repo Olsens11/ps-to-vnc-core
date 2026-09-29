@@ -14,6 +14,7 @@ coverage gaps without replacing the code under test.
 | `transport_physical_stream_test.c` | Deterministic short send/recv, sequence progression, ownership, Q4, shutdown/release behavior. | exact ledge import |
 | `transport_physical_readiness_test.c` | Real host socketpair coverage for timeout/readable/error returns from `wait_readable()`. | clean rung-02 addition |
 | `pi_wire_protocol_test.py` | Pi exact HELLO/ACCEPT bytes, generic frame round trip, invalid-contract rejection. | clean rung-02 addition |
+| `transport_rfb_channel_test.c` | Capacity rejection, circular wrap, partial/exact reads, producer activity, residual discard. | exact ledge import |
 
 The imported physical-stream fixture intentionally does not mock product
 framing functions; it links the real `physical_stream.c` and `protocol.c`.
